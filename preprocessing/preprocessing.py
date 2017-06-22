@@ -82,6 +82,20 @@ def categorise_media_duration(df):
     # Long song
     df.loc[df['media_duration'] > 300, 'media_duration_categ'] = 3
 
+def parse_release_date(df):
+    """ Create year/month/day/hour columns from release_date
+    
+    Parameters
+    ----------
+    df: Pandas dataframe containing a column release_date
+    """
+
+    df['release_date'] = df['release_date'].map(str)
+
+    df['release_date_year'] = df['release_date'].map(lambda x: int(x[:4]))
+    df['release_date_month'] = df['release_date'].map(lambda x: int(x[4:6]))
+    df['release_date_day'] = df['release_date'].map(lambda x: int(x[6:8]))
+
 def full_preprocessing(df):
     """ Full preprocessing as specified above
     
@@ -92,3 +106,4 @@ def full_preprocessing(df):
     preprocess_media_ids(df)
     parse_ts(df)
     categorise_media_duration(df)
+    parse_release_date(df)
