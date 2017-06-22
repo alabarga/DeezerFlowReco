@@ -32,6 +32,9 @@ def train_split_2(train, nb_songs):
     # Make sure that every user in the test set are in the train set
     test_f = test_f_temp[test_f_temp['user_id'].isin(train_f['user_id'].unique())]
 
+    # Remove duplicates (user_id, media_id)
+    test_f = test_f.groupby(['user_id', 'media_id']).last().reset_index()
+
     return train_f, test_f
 
 def train_split(train, nb_folds=1):
